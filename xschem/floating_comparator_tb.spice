@@ -1,0 +1,86 @@
+** sch_path: /home/andylithia/openmpw/project-kyouko/xschem/floating_comparator_tb.sch
+**.subckt floating_comparator_tb
+x1 VDD vctrl_hi vout_pre vin GND vctrl_lo floating_comparator_0
+Vsp VDD GND 1.8
+Vin vin GND PULSE(1.8 0 0 10ns 10ns 1ps 20001ps 0)
+C1 vctrl_lo GND 1p m=1
+C2 vctrl_hi GND 1p m=1
+vhi vctrl_hi GND 1.8
+vlo vctrl_lo GND 0
+x4 net1 GND GND VDD VDD vout sky130_fd_sc_hvl__inv_1
+vhi1 vctrl_hi1 GND 1.8
+vlo1 vctrl_lo1 GND 0
+XM1 net1 vout_pre vctrl_lo1 GND sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29'
++ as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)'
++ nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM2 net1 vout_pre vctrl_hi1 VDD sky130_fd_pr__pfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29'
++ as='int((nf+2)/2) * W/nf * 0.29' pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)'
++ nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+**** begin user architecture code
+.lib ~/openmpw/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice tt
+.include ~/openmpw/pdk/sky130A/libs.ref/sky130_fd_sc_hvl/spice/sky130_fd_sc_hvl.spice
+
+.control
+
+alter vhi = 1.8
+alter vlo = 0.8
+alter vhi1 = 1.6
+alter vlo1 = 0.6
+tran 1ps 23ns
+plot v(vin) v(vctrl_hi) v(vctrl_lo) v(vout_pre) v(vout)
+
+alter vhi = 1.6
+alter vlo = 0.6
+alter vhi1 = 1.5
+alter vlo1 = 0.5
+tran 1ps 23ns
+plot v(vin) v(vctrl_hi) v(vctrl_lo) v(vout_pre) v(vout)
+
+alter vhi = 1.4
+alter vlo = 0.4
+alter vhi1 = 1.4
+alter vlo1 = 0.4
+tran 1ps 23ns
+plot v(vin) v(vctrl_hi) v(vctrl_lo) v(vout_pre) v(vout)
+
+alter vhi = 1.2
+alter vlo = 0.2
+alter vhi1 = 1.3
+alter vlo1 = 0.3
+tran 1ps 23ns
+plot v(vin) v(vctrl_hi) v(vctrl_lo) v(vout_pre) v(vout)
+
+alter vhi = 1.0
+alter vlo = 0.0
+alter vhi1 = 1.2
+alter vlo1 = 0.2
+tran 1ps 23ns
+plot v(vin) v(vctrl_hi) v(vctrl_lo) v(vout_pre) v(vout)
+
+.endc
+
+
+**** end user architecture code
+**.ends
+
+* expanding   symbol:  floating_comparator_0.sym # of pins=6
+** sym_path: /home/andylithia/openmpw/project-kyouko/xschem/floating_comparator_0.sym
+** sch_path: /home/andylithia/openmpw/project-kyouko/xschem/floating_comparator_0.sch
+.subckt floating_comparator_0  vdd1v8 vctrl_h Q vin vss vctrl_l
+*.iopin vdd1v8
+*.iopin vss
+*.opin Q
+*.iopin vctrl_h
+*.ipin vin
+*.iopin vctrl_l
+XM1 Q vin vctrl_l vss sky130_fd_pr__nfet_01v8 L=0.15 W=1 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM2 Q vin vctrl_h vdd1v8 sky130_fd_pr__pfet_01v8 L=0.15 W=2 nf=1 ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W'
++ sa=0 sb=0 sd=0 mult=1 m=1
+.ends
+
+.GLOBAL VDD
+.GLOBAL GND
+.end
