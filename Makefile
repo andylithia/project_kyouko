@@ -13,7 +13,6 @@
 # limitations under the License.
 #
 # SPDX-License-Identifier: Apache-2.0
-
 CARAVEL_ROOT?=$(PWD)/caravel
 PRECHECK_ROOT?=${HOME}/mpw_precheck
 SIM ?= RTL
